@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinTrack Tests</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .test-results { max-width: 700px; margin: 24px auto; padding: 0 16px; }
+    .test-item { padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; font-size: 13px; font-family: 'Courier New', monospace; }
+    .test-pass { background: #1a3a22; border: 1px solid #2ea043; color: #2ea043; }
+    .test-fail { background: #3d1a1a; border: 1px solid #da3633; color: #da3633; }
+    .test-summary { font-size: 16px; font-weight: bold; margin-bottom: 20px; font-family: 'Courier New', monospace; color: #e6edf3; }
+    h1 { font-family: 'Courier New', monospace; color: #e6edf3; padding: 24px 16px 0; max-width: 700px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <h1>Validator Tests</h1>
+  <div class="test-results" id="results"></div>
+  <script type="module">
+    import { validateDescription, validateAmount, validateDate, validateCategory, validateBudget, validateImportRecord, hasCents, isBeverage } from './scripts/validators.js';
+    import { compileRegex, isValidRegex, highlight, matchesSearch } from './scripts/search.js';
+
+    const tests = [];
+
+    function test(name, actual, expected) {
+      tests.push({ name, actual, expected, pass: actual === expected });
+    }
+
+    test('Description: valid', validateDescription('Lunch at cafeteria'), '');
+    test('Description: empty', validateDescription(''), 'Description is required.');
+    test('Description: leading space', validateDescription(' hello'), 'Description must not have leading or trailing spaces.');
+    test('Description: trailing space', validateDescription('hello '), 'Description must not have leading or trailing spaces.');
+    test('Description: duplicate word', validateDescription('the the cafeteria'), 'Description contains a duplicate word (e.g. "the the").');
+    test('Description: single word ok', validateDescription('Lunch'), '');
+
+    test('Amount: valid integer', validateAmount('50'), '');
+    test('Amount: valid decimal', validateAmount('12.50'), '');
+    test('Amount: zero', validateAmount('0'), '');
+    test('Amount: empty', validateAmount(''), 'Amount is required.');
+    test('Amount: negative', validateAmount('-5'), 'Amount must be a positive number with up to 2 decimal places (e.g. 12.50).');
+    test('Amount: three decimals', validateAmount('1.234'), 'Amount must be a positive number with up to 2 decimal places (e.g. 12.50).');
+    test('Amount: letters', validateAmount('abc'), 'Amount must be a positive number with up to 2 decimal places (e.g. 12.50).');
+
+    test('Date: valid', validateDate('2025-09-29'), '');
+    test('Date: empty', validateDate(''), 'Date is required.');
+    test('Date: wrong format', validateDate('29-09-2025'), 'Date must be in YYYY-MM-DD format (e.g. 2025-09-29).');
+    test('Date: invalid month 13', validateDate('2025-13-01'), 'Date must be in YYYY-MM-DD format (e.g. 2025-09-29).');
+    test('Date: invalid day 00', validateDate('2025-09-00'), 'Date must be in YYYY-MM-DD format (e.g. 2025-09-29).');
+
+    test('Category: valid single', validateCategory('Food'), '');
+    test('Category: valid multi-word', validateCategory('Fast Food'), '');
+    test('Category: valid hyphen', validateCategory('Self-Care'), '');
+    test('Category: empty', validateCategory(''), 'Category is required.');
+    test('Category: numbers', validateCategory('Food123'), 'Category must contain only letters, spaces, or hyphens.');
+
+    test('Budget: valid', validateBudget('500'), '');
+    test('Budget: decimal', validateBudget('250.50'), '');
+    test('Budget: empty', validateBudget(''), 'Budget is required.');
+    test('Budget: letters', validateBudget('abc'), 'Budget must be a positive number.');
+
+    test('ImportRecord: valid', validateImportRecord({ id: 'x', description: 'y', amount: 1, category: 'z', date: '2025-01-01' }), true);
+    test('ImportRecord: missing amount', validateImportRecord({ id: 'x', description: 'y', category: 'z', date: '2025-01-01' }), false);
+    test('ImportRecord: amount string', validateImportRecord({ id: 'x', description: 'y', amount: '1', category: 'z', date: '2025-01-01' }), false);
+    test('ImportRecord: null', validateImportRecord(null), false);
+
+    test('hasCents: 12.50', hasCents(12.50), true);
+    test('hasCents: 12', hasCents(12), false);
+    test('isBeverage: coffee', isBeverage('Coffee with friends'), true);
+    test('isBeverage: tea', isBeverage('Morning tea'), true);
+    test('isBeverage: lunch', isBeverage('Lunch at cafeteria'), false);
+
+    test('Regex: valid pattern', isValidRegex('\\d+'), true);
+    test('Regex: invalid pattern', isValidRegex('[invalid'), false);
+    test('Regex: empty is valid', isValidRegex(''), true);
+    test('compileRegex: valid', compileRegex('food', false) !== null, true);
+    test('compileRegex: invalid returns null', compileRegex('[bad', false), null);
+    test('compileRegex: empty returns null', compileRegex('', false), null);
+
+    const re = compileRegex('lunch', false);
+    test('matchesSearch: matches description', matchesSearch({ description: 'Lunch at cafe', category: 'Food', amount: 10, date: '2025-01-01' }, re), true);
+    test('matchesSearch: no match', matchesSearch({ description: 'Taxi ride', category: 'Transport', amount: 10, date: '2025-01-01' }, re), false);
+
+    const results = document.getElementById('results');
+    const pass = tests.filter(t => t.pass).length;
+    const fail = tests.length - pass;
+
+    const summary = document.createElement('p');
+    summary.className = 'test-summary';
+    summary.textContent = pass + ' passed, ' + fail + ' failed out of ' + tests.length + ' tests.';
+    results.appendChild(summary);
+
+    tests.forEach(function(t) {
+      const el = document.createElement('div');
+      el.className = 'test-item ' + (t.pass ? 'test-pass' : 'test-fail');
+      el.textContent = (t.pass ? 'PASS' : 'FAIL') + '  ' + t.name + (t.pass ? '' : '  (got: ' + JSON.stringify(t.actual) + ', expected: ' + JSON.stringify(t.expected) + ')');
+      results.appendChild(el);
+    });
+  </script>
+</body>
+</html>
