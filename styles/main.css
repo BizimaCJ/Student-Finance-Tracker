@@ -15,7 +15,8 @@
   --warning: #d29922;
   --shadow: 0 2px 16px rgba(0,0,0,0.6);
   --radius: 8px;
-  --font: 'Courier New', monospace;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
 [data-theme="light"] {
