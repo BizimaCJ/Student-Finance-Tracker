@@ -20,7 +20,7 @@
   {
     "id": "rec_0015_seed",
     "description": "Introduction to Psychology textbook",
-    "amount": 25000,
+    "amount": 20000,
     "category": "Books",
     "date": "2026-02-10",
     "createdAt": "2026-02-10T10:00:00.000Z",
@@ -29,7 +29,7 @@
   {
     "id": "rec_0016_seed",
     "description": "Lunch with study group",
-    "amount": 5000,
+    "amount": 2000,
     "category": "Food",
     "date": "2026-02-10",
     "createdAt": "2026-02-10T13:00:00.000Z",
@@ -38,7 +38,7 @@
   {
     "id": "rec_0017_seed",
     "description": "Student union membership fee",
-    "amount": 20000,
+    "amount": 2000,
     "category": "Subscriptions",
     "date": "2026-02-11",
     "createdAt": "2026-02-11T09:00:00.000Z",
@@ -74,7 +74,7 @@
   {
     "id": "rec_0021_seed",
     "description": "Printing and binding assignment",
-    "amount": 5800,
+    "amount": 3800,
     "category": "Other",
     "date": "2026-02-13",
     "createdAt": "2026-02-13T10:30:00.000Z",
@@ -101,7 +101,7 @@
   {
     "id": "rec_0024_seed",
     "description": "Valentine's day",
-    "amount": 10000,
+    "amount": 1000,
     "category": "Entertainment",
     "date": "2026-02-14",
     "createdAt": "2026-02-14T17:00:00.000Z",
@@ -119,7 +119,7 @@
   {
     "id": "rec_0026_seed",
     "description": "Brunch",
-    "amount": 4000,
+    "amount": 2000,
     "category": "Food",
     "date": "2026-02-15",
     "createdAt": "2026-02-15T10:30:00.000Z",
@@ -128,7 +128,7 @@
   {
     "id": "rec_0027_seed",
     "description": "Hair cut and treatment",
-    "amount": 20000,
+    "amount": 10000,
     "category": "Hair & Skin Care",
     "date": "2026-02-16",
     "createdAt": "2026-02-16T11:00:00.000Z",
@@ -136,8 +136,8 @@
   },
   {
     "id": "rec_0028_seed",
-    "description": "Juice and snacks",
-    "amount": 3500,
+    "description": "Juice",
+    "amount": 500,
     "category": "Food",
     "date": "2026-02-16",
     "createdAt": "2026-02-16T14:00:00.000Z",
@@ -154,15 +154,6 @@
   },
   {
     "id": "rec_0030_seed",
-    "description": "Bowling with classmates",
-    "amount": 16000,
-    "category": "Entertainment",
-    "date": "2026-02-17",
-    "createdAt": "2026-02-17T18:00:00.000Z",
-    "updatedAt": "2026-02-17T18:00:00.000Z"
-  },
-  {
-    "id": "rec_0031_seed",
     "description": "Moto home after late class",
     "amount": 2000,
     "category": "Transport",
@@ -171,7 +162,7 @@
     "updatedAt": "2026-02-18T21:30:00.000Z"
   },
   {
-    "id": "rec_0032_seed",
+    "id": "rec_0031_seed",
     "description": "Supermarket groceries",
     "amount": 34000,
     "category": "Food",
@@ -180,7 +171,7 @@
     "updatedAt": "2026-02-18T16:00:00.000Z"
   },
   {
-    "id": "rec_0033_seed",
+    "id": "rec_0032_seed",
     "description": "New jeans and shirt",
     "amount": 28000,
     "category": "Clothes & Shoes",
@@ -189,7 +180,7 @@
     "updatedAt": "2026-02-19T10:00:00.000Z"
   },
   {
-    "id": "rec_0034_seed",
+    "id": "rec_0033_seed",
     "description": "Coffee",
     "amount": 1000,
     "category": "Food",

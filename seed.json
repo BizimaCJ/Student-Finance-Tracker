@@ -10,7 +10,7 @@
   },
   {
     "id": "rec_0002_seed",
-    "description": "Chemistry textbook",
+    "description": "Non-fiction book",
     "amount": 30000,
     "category": "Books",
     "date": "2026-01-08",
@@ -29,7 +29,7 @@
   {
     "id": "rec_0004_seed",
     "description": "Coffee with friends",
-    "amount": 8750,
+    "amount": 8500,
     "category": "Entertainment",
     "date": "2026-01-12",
     "createdAt": "2026-01-12T14:00:00.000Z",
@@ -37,8 +37,8 @@
   },
   {
     "id": "rec_0005_seed",
-    "description": "University registration fees",
-    "amount": 30000,
+    "description": "Club fees",
+    "amount": 1000,
     "category": "Rent/Dorm Fees",
     "date": "2026-01-03",
     "createdAt": "2026-01-03T08:00:00.000Z",
@@ -55,7 +55,7 @@
   },
   {
     "id": "rec_0007_seed",
-    "description": "Math and physics notes",
+    "description": "Comp. Sci. notes",
     "amount": 15000,
     "category": "Books",
     "date": "2026-01-17",
@@ -83,7 +83,7 @@
   {
     "id": "rec_0010_seed",
     "description": "Notebook and pens",
-    "amount": 9900,
+    "amount": 7000,
     "category": "Other",
     "date": "2026-01-23",
     "createdAt": "2026-01-23T12:00:00.000Z",
