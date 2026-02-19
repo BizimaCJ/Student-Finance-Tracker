@@ -56,6 +56,14 @@ export function generateId() {
   return 'rec_' + count + '_' + Date.now();
 }
 
+export function mergeTransactions(incoming) {
+  const existingIds = new Set(transactions.map(function(t) { return t.id; }));
+  const newOnes = incoming.filter(function(t) { return !existingIds.has(t.id); });
+  transactions = transactions.concat(newOnes);
+  saveTransactions(transactions);
+  return newOnes.length;
+}
+
 export function clearAll() {
   transactions = [];
   saveTransactions(transactions);

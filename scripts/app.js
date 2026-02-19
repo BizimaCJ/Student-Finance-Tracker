@@ -1,4 +1,4 @@
-import { init, getSettings, getTransactions, addTransaction, updateTransaction, deleteTransaction, getTransactionById, updateSettings, replaceTransactions, generateId, clearAll } from './state.js';
+import { init, getSettings, getTransactions, addTransaction, updateTransaction, deleteTransaction, getTransactionById, updateSettings, replaceTransactions, mergeTransactions, generateId, clearAll } from './state.js';
 import { validateDescription, validateAmount, validateDate, validateCategory, validateBudget, validateImportRecord } from './validators.js';
 import { compileRegex, isValidRegex } from './search.js';
 import { renderTransactions, renderDashboard, renderCategorySelect, renderCategoryManager, showToast, setFieldError, clearFormErrors, fillFormForEdit, resetForm } from './ui.js';
@@ -234,29 +234,51 @@ document.getElementById('exportBtn').addEventListener('click', function() {
 });
 
 document.getElementById('importFile').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
+  const files = Array.from(e.target.files);
+  if (files.length === 0) return;
   const statusEl = document.getElementById('importStatus');
-  const reader = new FileReader();
-  reader.onload = function(evt) {
-    try {
-      const parsed = JSON.parse(evt.target.result);
-      if (!Array.isArray(parsed)) {
-        statusEl.textContent = 'Error: JSON must be an array.';
-        return;
+  statusEl.textContent = 'Importing...';
+
+  let filesProcessed = 0;
+  let totalMerged = 0;
+  let totalSkippedInvalid = 0;
+  let totalSkippedDuplicate = 0;
+  let errors = [];
+
+  files.forEach(function(file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        const parsed = JSON.parse(evt.target.result);
+        if (!Array.isArray(parsed)) {
+          errors.push(file.name + ': not a valid array.');
+        } else {
+          const valid = parsed.filter(validateImportRecord);
+          const invalid = parsed.length - valid.length;
+          totalSkippedInvalid += invalid;
+          const merged = mergeTransactions(valid);
+          totalMerged += merged;
+          totalSkippedDuplicate += valid.length - merged;
+        }
+      } catch (err) {
+        errors.push(file.name + ': could not parse JSON.');
       }
-      const valid = parsed.filter(validateImportRecord);
-      const invalid = parsed.length - valid.length;
-      replaceTransactions(valid);
-      refreshTransactions();
-      renderDashboard(getSelectedMonth());
-      statusEl.textContent = 'Imported ' + valid.length + ' records.' + (invalid > 0 ? ' Skipped ' + invalid + ' invalid.' : '');
-      showToast('Import complete.', 'success');
-    } catch (err) {
-      statusEl.textContent = 'Error: Could not parse JSON file.';
-    }
-  };
-  reader.readAsText(file);
+
+      filesProcessed++;
+      if (filesProcessed === files.length) {
+        refreshTransactions();
+        renderDashboard(getSelectedMonth());
+        let msg = 'Imported ' + totalMerged + ' new records from ' + files.length + ' file' + (files.length > 1 ? 's' : '') + '.';
+        if (totalSkippedDuplicate > 0) msg += ' Skipped ' + totalSkippedDuplicate + ' duplicates.';
+        if (totalSkippedInvalid > 0) msg += ' Skipped ' + totalSkippedInvalid + ' invalid.';
+        if (errors.length > 0) msg += ' Errors: ' + errors.join(' ');
+        statusEl.textContent = msg;
+        showToast('Import complete.', 'success');
+      }
+    };
+    reader.readAsText(file);
+  });
+
   this.value = '';
 });
 
