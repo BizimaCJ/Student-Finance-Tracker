@@ -1,5 +1,5 @@
-const TRANSACTIONS_KEY = 'fintrack:transactions';
-const SETTINGS_KEY = 'fintrack:settings';
+const TRANSACTIONS_KEY = 'campuscoins:transactions';
+const SETTINGS_KEY = 'campuscoins:settings';
 
 export function loadTransactions() {
   try {
@@ -42,13 +42,24 @@ export function saveSettings(settings) {
 
 function getDefaultSettings() {
   return {
-    budget: 500,
-    currency: 'USD',
-    rate1Label: 'EUR',
-    rate1Value: 0.92,
-    rate2Label: 'GBP',
-    rate2Value: 0.79,
-    categories: ['Food', 'Books', 'Transport', 'Entertainment', 'Fees', 'Other'],
+    budget: 100000,
+    currency: 'RWF',
+    usdRate: 0.00073,
+    categories: [
+      'Food',
+      'Books',
+      'Transport',
+      'Entertainment',
+      'Repairs',
+      'Utilities',
+      'Rent/Dorm Fees',
+      'Toiletries',
+      'Hair & Skin Care',
+      'Clothes & Shoes',
+      'Gifts/Contributions',
+      'Subscriptions',
+      'Other'
+    ],
     theme: 'dark'
   };
 }

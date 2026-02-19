@@ -1,17 +1,17 @@
-# FinTrack - Student Finance Tracker
+# UniWallet
 
 A simple, accessible student finance tracker built with plain HTML, CSS, and JavaScript.
 
-Live URL: https://yourusername.github.io/student-finance-tracker
+Live URL: https://bizimacj.github.io/Student-Finance-Tracker/
 
 ## Overview
 
-FinTrack lets you record spending, set a monthly budget, search and sort transactions, and view a spending dashboard. All data is stored in your browser using localStorage. You can export your data as JSON and import it back.
+UniWallet lets you record spending, set a monthly budget, search and sort transactions, and view a spending dashboard. All data is stored in your browser using localStorage. You can export your data as JSON and import it back.
 
 ## How to Run Locally
 
 1. Clone the repository:
-   git clone https://github.com/yourusername/student-finance-tracker.git
+   git clone https://github.com/BizimaCJ/Student-Finance-Tracker.git
 
 2. Open the folder in a code editor such as VS Code.
 
@@ -113,7 +113,3 @@ Open tests.html in a local server. All tests run automatically and results displ
 - M5: Dashboard stats, budget bar, trend chart, category breakdown
 - M6: localStorage persistence, JSON import/export, settings page
 - M7: Dark/light theme, animations, keyboard pass, accessibility audit
-
-## Deploy to GitHub Pages
-
-See the GitHub Pages section below for step-by-step instructions.

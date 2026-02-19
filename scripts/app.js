@@ -60,7 +60,12 @@ function showPage(pageId) {
   navToggle.classList.remove('open');
   navToggle.setAttribute('aria-expanded', 'false');
 
-  if (pageId === 'dashboard') renderDashboard();
+  window.scrollTo(0, 0);
+
+  if (pageId === 'dashboard') {
+    setMonthPickerDefault();
+    renderDashboard(getSelectedMonth());
+  }
   if (pageId === 'transactions') refreshTransactions();
   if (pageId === 'settings') renderSettings();
 }
@@ -71,6 +76,29 @@ document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(function(link) 
     const page = link.getAttribute('data-page');
     if (page) showPage(page);
   });
+});
+
+function getCurrentMonth() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  return y + '-' + m;
+}
+
+function getSelectedMonth() {
+  const picker = document.getElementById('monthPicker');
+  return (picker && picker.value) ? picker.value : getCurrentMonth();
+}
+
+function setMonthPickerDefault() {
+  const picker = document.getElementById('monthPicker');
+  if (picker && !picker.value) {
+    picker.value = getCurrentMonth();
+  }
+}
+
+document.getElementById('monthPicker').addEventListener('change', function() {
+  renderDashboard(this.value);
 });
 
 function getSearchRegex() {
@@ -128,7 +156,7 @@ document.getElementById('transactionsBody').addEventListener('click', function(e
     if (window.confirm('Delete this transaction? This cannot be undone.')) {
       deleteTransaction(id);
       refreshTransactions();
-      renderDashboard();
+      renderDashboard(getSelectedMonth());
       showToast('Transaction deleted.', 'error');
     }
   }
@@ -161,18 +189,18 @@ form.addEventListener('submit', function(e) {
   if (editId) {
     updateTransaction(editId, {
       description: description.trim(),
-      amount: parseFloat(amount),
+      amount: parseInt(amount, 10),
       category: category,
       date: date.trim()
     });
     resetForm();
     showToast('Transaction updated.', 'success');
-    renderDashboard();
+    renderDashboard(getSelectedMonth());
   } else {
     const record = {
       id: generateId(),
       description: description.trim(),
-      amount: parseFloat(amount),
+      amount: parseInt(amount, 10),
       category: category,
       date: date.trim(),
       createdAt: now,
@@ -185,7 +213,7 @@ form.addEventListener('submit', function(e) {
       document.getElementById('formStatus').textContent = '';
     }, 2000);
     showToast('Transaction added.', 'success');
-    renderDashboard();
+    renderDashboard(getSelectedMonth());
   }
 });
 
@@ -199,7 +227,7 @@ document.getElementById('exportBtn').addEventListener('click', function() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'fintrack-export.json';
+  a.download = 'campuscoins-export.json';
   a.click();
   URL.revokeObjectURL(url);
   showToast('Exported ' + data.length + ' transactions.', 'success');
@@ -221,7 +249,7 @@ document.getElementById('importFile').addEventListener('change', function(e) {
       const invalid = parsed.length - valid.length;
       replaceTransactions(valid);
       refreshTransactions();
-      renderDashboard();
+      renderDashboard(getSelectedMonth());
       statusEl.textContent = 'Imported ' + valid.length + ' records.' + (invalid > 0 ? ' Skipped ' + invalid + ' invalid.' : '');
       showToast('Import complete.', 'success');
     } catch (err) {
@@ -235,11 +263,7 @@ document.getElementById('importFile').addEventListener('change', function(e) {
 function renderSettings() {
   const settings = getSettings();
   document.getElementById('budgetLimit').value = settings.budget || '';
-  document.getElementById('baseCurrency').value = settings.currency || 'USD';
-  document.getElementById('rate1Label').value = settings.rate1Label || '';
-  document.getElementById('rate1Value').value = settings.rate1Value || '';
-  document.getElementById('rate2Label').value = settings.rate2Label || '';
-  document.getElementById('rate2Value').value = settings.rate2Value || '';
+  document.getElementById('usdRate').value = settings.usdRate || '';
 
   const container = document.getElementById('categoryManager');
   renderCategoryManager(container, settings.categories || [], function(cat) {
@@ -256,27 +280,16 @@ document.getElementById('saveBudgetBtn').addEventListener('click', function() {
   const err = validateBudget(val);
   setFieldError('budgetLimit', 'errBudget', err);
   if (err) return;
-  updateSettings({ budget: parseFloat(val) });
+  updateSettings({ budget: parseInt(val, 10) });
   document.getElementById('budgetMessage').textContent = '';
-  renderDashboard();
+  renderDashboard(getSelectedMonth());
   showToast('Budget saved.', 'success');
 });
 
 document.getElementById('saveCurrencyBtn').addEventListener('click', function() {
-  const currency = document.getElementById('baseCurrency').value;
-  const r1l = document.getElementById('rate1Label').value;
-  const r1v = document.getElementById('rate1Value').value;
-  const r2l = document.getElementById('rate2Label').value;
-  const r2v = document.getElementById('rate2Value').value;
-  updateSettings({
-    currency: currency,
-    rate1Label: r1l,
-    rate1Value: parseFloat(r1v) || 0,
-    rate2Label: r2l,
-    rate2Value: parseFloat(r2v) || 0
-  });
+  const rate = document.getElementById('usdRate').value;
+  updateSettings({ usdRate: parseFloat(rate) || 0 });
   document.getElementById('currencyStatus').textContent = 'Saved.';
-  document.getElementById('currencyPrefix').textContent = currency;
   setTimeout(function() {
     document.getElementById('currencyStatus').textContent = '';
   }, 2000);
@@ -310,11 +323,11 @@ document.getElementById('clearDataBtn').addEventListener('click', function() {
   if (window.confirm('Clear ALL transactions? This cannot be undone.')) {
     clearAll();
     refreshTransactions();
-    renderDashboard();
+    renderDashboard(getSelectedMonth());
     showToast('All data cleared.', 'error');
   }
 });
 
 renderCategorySelect(document.getElementById('fieldCategory'), getSettings().categories || []);
-document.getElementById('currencyPrefix').textContent = getSettings().currency || 'USD';
+document.getElementById('currencyPrefix').textContent = 'RWF';
 showPage('dashboard');

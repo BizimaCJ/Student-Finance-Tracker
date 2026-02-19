@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Finance Tracker</title>
+  <title>CampusCoins</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -12,8 +12,8 @@
   <header class="site-header" role="banner">
     <div class="header-inner">
       <div class="logo">
-        <span class="logo-icon">$</span>
-        <span class="logo-text">FinTrack</span>
+        <span class="logo-icon">C</span>
+        <span class="logo-text">CampusCoins</span>
       </div>
       <nav class="main-nav" role="navigation" aria-label="Main navigation">
         <ul class="nav-list">
@@ -54,6 +54,11 @@
       <div class="page-inner">
         <h1 id="dashboard-heading" class="page-title">Dashboard</h1>
 
+        <div class="month-picker-wrap">
+          <label for="monthPicker" class="month-picker-label">Viewing month</label>
+          <input type="month" id="monthPicker" class="month-picker" aria-label="Select month to view" />
+        </div>
+
         <div class="stats-grid">
           <div class="stat-card">
             <span class="stat-label">Total Transactions</span>
@@ -61,7 +66,7 @@
           </div>
           <div class="stat-card accent">
             <span class="stat-label">Total Spent</span>
-            <span class="stat-value" id="statSpent">0.00</span>
+            <span class="stat-value" id="statSpent">0</span>
           </div>
           <div class="stat-card">
             <span class="stat-label">Top Category</span>
@@ -69,7 +74,7 @@
           </div>
           <div class="stat-card">
             <span class="stat-label">Budget Remaining</span>
-            <span class="stat-value" id="statRemaining">0.00</span>
+            <span class="stat-value" id="statRemaining">0</span>
           </div>
         </div>
 
@@ -79,15 +84,15 @@
             <div class="budget-bar" id="budgetBar"></div>
           </div>
           <div class="budget-labels">
-            <span id="budgetSpentLabel">Spent: 0.00</span>
-            <span id="budgetLimitLabel">Limit: 0.00</span>
+            <span id="budgetSpentLabel">Spent: 0</span>
+            <span id="budgetLimitLabel">Limit: 0</span>
           </div>
           <div class="budget-message" id="budgetMessage" role="status" aria-live="polite"></div>
         </div>
 
         <div class="trend-section">
-          <h2 class="section-title">Last 7 Days</h2>
-          <div class="trend-chart" id="trendChart" aria-label="Spending trend for last 7 days"></div>
+          <h2 class="section-title">Daily Spending This Month</h2>
+          <div class="trend-chart" id="trendChart" aria-label="Daily spending trend for selected month"></div>
         </div>
 
         <div class="category-section">
@@ -130,7 +135,7 @@
             <thead>
               <tr>
                 <th scope="col">Description</th>
-                <th scope="col">Amount</th>
+                <th scope="col">Amount (RWF)</th>
                 <th scope="col">Category</th>
                 <th scope="col">Date</th>
                 <th scope="col">Actions</th>
@@ -171,9 +176,9 @@
           </div>
 
           <div class="form-group">
-            <label for="fieldAmount" class="form-label">Amount</label>
+            <label for="fieldAmount" class="form-label">Amount (RWF)</label>
             <div class="amount-wrap">
-              <span class="currency-prefix" id="currencyPrefix">USD</span>
+              <span class="currency-prefix" id="currencyPrefix">RWF</span>
               <input type="text" id="fieldAmount" class="form-input" required autocomplete="off" />
             </div>
             <span class="form-error" id="errAmount" role="alert"></span>
@@ -209,8 +214,8 @@
         <div class="settings-group">
           <h2 class="section-title">Budget</h2>
           <div class="form-group">
-            <label for="budgetLimit" class="form-label">Monthly Budget Limit</label>
-            <input type="text" id="budgetLimit" class="form-input" placeholder="e.g. 500" />
+            <label for="budgetLimit" class="form-label">Monthly Budget Limit (RWF)</label>
+            <input type="text" id="budgetLimit" class="form-input" placeholder="e.g. 100000" />
             <span class="form-error" id="errBudget" role="alert"></span>
           </div>
           <button type="button" class="btn btn-primary" id="saveBudgetBtn">Save Budget</button>
@@ -218,31 +223,10 @@
 
         <div class="settings-group">
           <h2 class="section-title">Currency</h2>
+          <p class="settings-note">Primary currency is RWF. Enter the exchange rate to USD below.</p>
           <div class="form-group">
-            <label for="baseCurrency" class="form-label">Base Currency</label>
-            <select id="baseCurrency" class="form-input form-select">
-              <option value="USD">USD - US Dollar</option>
-              <option value="EUR">EUR - Euro</option>
-              <option value="GBP">GBP - British Pound</option>
-              <option value="RWF">RWF - Rwandan Franc</option>
-              <option value="KES">KES - Kenyan Shilling</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="rate1Label" class="form-label">Currency 2 Label</label>
-            <input type="text" id="rate1Label" class="form-input" placeholder="e.g. EUR" />
-          </div>
-          <div class="form-group">
-            <label for="rate1Value" class="form-label">Currency 2 Rate (1 base = ? currency 2)</label>
-            <input type="text" id="rate1Value" class="form-input" placeholder="e.g. 0.92" />
-          </div>
-          <div class="form-group">
-            <label for="rate2Label" class="form-label">Currency 3 Label</label>
-            <input type="text" id="rate2Label" class="form-input" placeholder="e.g. GBP" />
-          </div>
-          <div class="form-group">
-            <label for="rate2Value" class="form-label">Currency 3 Rate (1 base = ? currency 3)</label>
-            <input type="text" id="rate2Value" class="form-input" placeholder="e.g. 0.79" />
+            <label for="usdRate" class="form-label">1 RWF = ? USD</label>
+            <input type="text" id="usdRate" class="form-input" placeholder="e.g. 0.00073" />
           </div>
           <button type="button" class="btn btn-primary" id="saveCurrencyBtn">Save Currency Settings</button>
           <div class="settings-status" id="currencyStatus" role="status" aria-live="polite"></div>
@@ -271,18 +255,14 @@
       <div class="page-inner">
         <h1 id="about-heading" class="page-title">About</h1>
         <div class="about-content">
-          <p>FinTrack is a simple student finance tracker built with plain HTML, CSS, and JavaScript. It helps you keep track of spending, set a monthly budget, and understand where your money goes.</p>
+          <p>CampusCoins is a simple student finance tracker built with plain HTML, CSS, and JavaScript. It helps you keep track of spending, set a monthly budget, and understand where your money goes.</p>
           <h2 class="section-title">Features</h2>
           <p>Add and manage transactions. Sort and search your records. View a spending dashboard with trends and category breakdowns. Import and export your data as JSON. Set a monthly budget and get alerts when you go over.</p>
           <h2 class="section-title">Contact</h2>
-          <p>
-            GitHub: <a href="https://github.com" class="about-link" target="_blank" rel="noopener noreferrer">github.com/yourusername</a>
-          </p>
-          <p>
-            Email: <a href="mailto:you@example.com" class="about-link">you@example.com</a>
-          </p>
+          <p>GitHub: <a href="https://github.com" class="about-link" target="_blank" rel="noopener noreferrer">github.com/BizimaCJ</a></p>
+          <p>Email: <a href="mailto:c.bizima@alustudent.com" class="about-link">c.bizima@alustudent.com</a></p>
           <h2 class="section-title">How to Use</h2>
-          <p>Click Add New in the navigation to add a transaction. Fill in a description, amount, category, and date. Your data is saved automatically in your browser. You can export it as a JSON file at any time from the Transactions page.</p>
+          <p>Click Add New in the navigation to add a transaction. Fill in a description, amount in RWF, category, and date. Your data is saved automatically in your browser. You can export it as a JSON file at any time from the Transactions page.</p>
           <h2 class="section-title">Keyboard Navigation</h2>
           <p>Use Tab to move between elements. Use Enter or Space to activate buttons. Use the skip link at the top of the page to jump to main content. All interactive elements have visible focus styles.</p>
         </div>
@@ -293,8 +273,8 @@
 
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
-      <p>FinTrack - Student Finance Tracker</p>
-      <p>Data stored locally in your browser</p>
+      <p>CampusCoins, your personal budget tracker</p>
+      <p>Built by Cj</p>
     </div>
   </footer>
 

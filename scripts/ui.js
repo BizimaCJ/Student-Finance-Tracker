@@ -3,6 +3,12 @@ import { highlight, matchesSearch } from './search.js';
 
 export function renderCategorySelect(selectEl, categories) {
   selectEl.innerHTML = '';
+  const blank = document.createElement('option');
+  blank.value = '';
+  blank.textContent = 'Select a category';
+  blank.disabled = true;
+  blank.selected = true;
+  selectEl.appendChild(blank);
   categories.forEach(function(cat) {
     const opt = document.createElement('option');
     opt.value = cat;
@@ -55,7 +61,7 @@ export function renderTransactions(tbody, re, sortValue) {
     emptyState.classList.remove('visible');
   }
 
-  const currencySymbols = { USD: '$', EUR: 'E', GBP: 'L', RWF: 'Fr', KES: 'Ksh' };
+  const currencySymbols = { RWF: 'RWF', USD: 'USD' };
   const symbol = currencySymbols[settings.currency] || settings.currency;
 
   filtered.forEach(function(t) {
@@ -66,7 +72,7 @@ export function renderTransactions(tbody, re, sortValue) {
 
     const amountCell = document.createElement('td');
     amountCell.className = 'amount-cell';
-    amountCell.textContent = symbol + ' ' + parseFloat(t.amount).toFixed(2);
+    amountCell.textContent = symbol + ' ' + Math.round(parseFloat(t.amount)).toLocaleString();
 
     const catCell = document.createElement('td');
     const badge = document.createElement('span');
@@ -106,9 +112,15 @@ export function renderTransactions(tbody, re, sortValue) {
   });
 }
 
-export function renderDashboard() {
-  const transactions = getTransactions();
+export function renderDashboard(selectedMonth) {
+  const allTransactions = getTransactions();
   const settings = getSettings();
+
+  const month = selectedMonth || getCurrentMonth();
+
+  const transactions = allTransactions.filter(function(t) {
+    return t.date && t.date.slice(0, 7) === month;
+  });
 
   const total = transactions.length;
   const sum = transactions.reduce(function(acc, t) {
@@ -127,7 +139,7 @@ export function renderDashboard() {
   const budget = parseFloat(settings.budget) || 0;
   const remaining = budget - sum;
 
-  const currencySymbols = { USD: '$', EUR: 'E', GBP: 'L', RWF: 'Fr', KES: 'Ksh' };
+  const currencySymbols = { RWF: 'RWF', USD: 'USD' };
   const symbol = currencySymbols[settings.currency] || settings.currency;
 
   const elTotal = document.getElementById('statTotal');
@@ -136,13 +148,20 @@ export function renderDashboard() {
   const elRemaining = document.getElementById('statRemaining');
 
   if (elTotal) elTotal.textContent = total;
-  if (elSpent) elSpent.textContent = symbol + ' ' + sum.toFixed(2);
+  if (elSpent) elSpent.textContent = symbol + ' ' + Math.round(sum).toLocaleString();
   if (elTopCat) elTopCat.textContent = topCat;
-  if (elRemaining) elRemaining.textContent = symbol + ' ' + remaining.toFixed(2);
+  if (elRemaining) elRemaining.textContent = symbol + ' ' + Math.round(remaining).toLocaleString();
 
   renderBudgetBar(sum, budget);
-  renderTrend(transactions);
+  renderTrend(transactions, month);
   renderCategories(catTotals, sum);
+}
+
+function getCurrentMonth() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  return y + '-' + m;
 }
 
 function renderBudgetBar(spent, budget) {
@@ -167,7 +186,7 @@ function renderBudgetBar(spent, budget) {
   if (spent > budget && budget > 0) {
     bar.classList.add('over');
     if (msg) {
-      msg.textContent = 'Budget exceeded by ' + (spent - budget).toFixed(2);
+      msg.textContent = 'Budget exceeded by RWF ' + Math.round(spent - budget).toLocaleString();
       msg.classList.add('over');
       msg.setAttribute('aria-live', 'assertive');
     }
@@ -188,23 +207,29 @@ function renderBudgetBar(spent, budget) {
     if (msg) msg.textContent = 'No budget set. Go to Settings to set one.';
   }
 
-  if (spentLabel) spentLabel.textContent = 'Spent: ' + spent.toFixed(2);
-  if (limitLabel) limitLabel.textContent = 'Limit: ' + budget.toFixed(2);
+  if (spentLabel) spentLabel.textContent = 'Spent: ' + Math.round(spent).toLocaleString();
+  if (limitLabel) limitLabel.textContent = 'Limit: ' + Math.round(budget).toLocaleString();
 }
 
-function renderTrend(transactions) {
+function renderTrend(transactions, month) {
   const chart = document.getElementById('trendChart');
   if (!chart) return;
   chart.innerHTML = '';
 
+  const parts = month.split('-');
+  const year = parseInt(parts[0]);
+  const monthIndex = parseInt(parts[1]) - 1;
+  const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+  const isCurrentMonth = month === (today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0'));
+  const cutoffDay = isCurrentMonth ? today.getDate() : daysInMonth;
+
   const days = [];
-  const now = new Date();
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(now);
-    d.setDate(d.getDate() - i);
-    const label = d.toLocaleDateString('en-US', { weekday: 'short' });
-    const dateStr = d.toISOString().split('T')[0];
-    days.push({ label: label, date: dateStr, total: 0 });
+  for (let d = 1; d <= cutoffDay; d++) {
+    const dateStr = year + '-' + String(monthIndex + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+    days.push({ label: String(d), date: dateStr, total: 0 });
   }
 
   transactions.forEach(function(t) {
@@ -222,7 +247,7 @@ function renderTrend(transactions) {
     bar.className = 'trend-bar';
     const heightPct = Math.max((day.total / maxTotal) * 64, day.total > 0 ? 4 : 2);
     bar.style.height = heightPct + 'px';
-    bar.setAttribute('title', day.date + ': ' + day.total.toFixed(2));
+    bar.setAttribute('title', day.date + ': ' + Math.round(day.total).toLocaleString());
 
     const label = document.createElement('span');
     label.className = 'trend-label';
@@ -270,7 +295,7 @@ function renderCategories(catTotals, totalSum) {
 
     const amountEl = document.createElement('span');
     amountEl.className = 'category-row-amount';
-    amountEl.textContent = amount.toFixed(2);
+    amountEl.textContent = Math.round(amount).toLocaleString();
 
     row.appendChild(name);
     row.appendChild(barWrap);

@@ -1,39 +1,39 @@
 :root {
-  --bg: #0d1117;
-  --bg2: #161b22;
-  --bg3: #21262d;
-  --border: #30363d;
-  --text: #e6edf3;
-  --text2: #8b949e;
+  --bg: #0a0f1e;
+  --bg2: #0d1530;
+  --bg3: #152045;
+  --border: #1e3060;
+  --text: #dce8ff;
+  --text2: #7a9acc;
   --accent: #1a6fc4;
-  --accent2: #388bfd;
-  --accent-light: #1a3a5c;
+  --accent2: #4d9fff;
+  --accent-light: #0d2040;
   --danger: #da3633;
   --danger-light: #3d1a1a;
   --success: #2ea043;
   --success-light: #1a3a22;
   --warning: #d29922;
-  --shadow: 0 2px 12px rgba(0,0,0,0.4);
+  --shadow: 0 2px 16px rgba(0,0,0,0.6);
   --radius: 8px;
-  --font: 'Courier New', monospace;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 [data-theme="light"] {
-  --bg: #f0f6ff;
-  --bg2: #ffffff;
-  --bg3: #e8f0fe;
-  --border: #b0c4de;
-  --text: #0d1b2a;
-  --text2: #3a5a80;
+  --bg: #cce0ff;
+  --bg2: #e8f2ff;
+  --bg3: #b8d4ff;
+  --border: #7aaee8;
+  --text: #041830;
+  --text2: #1a4a80;
   --accent: #1a56db;
   --accent2: #1e40af;
-  --accent-light: #dbeafe;
+  --accent-light: #a8c8ff;
   --danger: #c0392b;
   --danger-light: #fde8e8;
   --success: #166534;
   --success-light: #dcfce7;
   --warning: #854d0e;
-  --shadow: 0 2px 12px rgba(0,80,180,0.08);
+  --shadow: 0 2px 12px rgba(0,60,180,0.12);
 }
 
 * {
@@ -141,7 +141,7 @@ a:focus {
 
 .logo-text {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 17px;
   letter-spacing: 2px;
   color: var(--text);
 }
@@ -286,13 +286,19 @@ a:focus {
 .mobile-nav {
   background-color: var(--bg2);
   border-bottom: 1px solid var(--border);
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  z-index: 99;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
+  box-shadow: var(--shadow);
 }
 
 .mobile-nav.open {
-  max-height: 300px;
+  max-height: 340px;
 }
 
 .mobile-nav-list {
@@ -302,7 +308,7 @@ a:focus {
 
 .mobile-nav-link {
   display: block;
-  padding: 12px 24px;
+  padding: 14px 24px;
   color: var(--text2);
   font-size: 14px;
   letter-spacing: 1px;
@@ -368,6 +374,48 @@ main {
   text-transform: uppercase;
 }
 
+.settings-note {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 14px;
+}
+
+.month-picker-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  background-color: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+}
+
+.month-picker-label {
+  font-size: 12px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.month-picker {
+  background-color: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.month-picker:focus {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+  border-color: var(--accent2);
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -403,10 +451,11 @@ main {
 }
 
 .stat-value {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   color: var(--text);
   letter-spacing: 1px;
+  word-break: break-all;
 }
 
 .stat-card.accent .stat-value {
@@ -483,13 +532,15 @@ main {
 .trend-chart {
   display: flex;
   align-items: flex-end;
-  gap: 6px;
+  gap: 3px;
   height: 80px;
   padding-top: 8px;
+  overflow-x: auto;
 }
 
 .trend-bar-wrap {
-  flex: 1;
+  flex-shrink: 0;
+  min-width: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -507,9 +558,8 @@ main {
 }
 
 .trend-label {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--text2);
-  letter-spacing: 0;
 }
 
 .category-section {
@@ -536,7 +586,7 @@ main {
 .category-row-name {
   font-size: 13px;
   color: var(--text);
-  min-width: 80px;
+  min-width: 110px;
 }
 
 .category-row-bar-wrap {
@@ -557,7 +607,7 @@ main {
 .category-row-amount {
   font-size: 12px;
   color: var(--text2);
-  min-width: 60px;
+  min-width: 80px;
   text-align: right;
 }
 
@@ -887,10 +937,18 @@ mark {
   transform: scale(0.97);
 }
 
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .btn-primary {
   background-color: var(--accent);
   color: #fff;
   border-color: var(--accent);
+  opacity: 1;
+  cursor: pointer;
 }
 
 .btn-primary:hover {
@@ -902,6 +960,8 @@ mark {
   background-color: var(--bg3);
   color: var(--text);
   border-color: var(--border);
+  opacity: 1;
+  cursor: pointer;
 }
 
 .btn-secondary:hover {
@@ -1122,6 +1182,6 @@ mark {
   }
 
   .stat-value {
-    font-size: 28px;
+    font-size: 22px;
   }
 }

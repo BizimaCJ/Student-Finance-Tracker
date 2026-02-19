@@ -1,0 +1,200 @@
+[
+  {
+    "id": "rec_0013_seed",
+    "description": "Breakfast",
+    "amount": 4500,
+    "category": "Food",
+    "date": "2026-02-09",
+    "createdAt": "2026-02-09T07:30:00.000Z",
+    "updatedAt": "2026-02-09T07:30:00.000Z"
+  },
+  {
+    "id": "rec_0014_seed",
+    "description": "Moto ride to lecture hall",
+    "amount": 2000,
+    "category": "Transport",
+    "date": "2026-02-09",
+    "createdAt": "2026-02-09T08:15:00.000Z",
+    "updatedAt": "2026-02-09T08:15:00.000Z"
+  },
+  {
+    "id": "rec_0015_seed",
+    "description": "Introduction to Psychology textbook",
+    "amount": 25000,
+    "category": "Books",
+    "date": "2026-02-10",
+    "createdAt": "2026-02-10T10:00:00.000Z",
+    "updatedAt": "2026-02-10T10:00:00.000Z"
+  },
+  {
+    "id": "rec_0016_seed",
+    "description": "Lunch with study group",
+    "amount": 5000,
+    "category": "Food",
+    "date": "2026-02-10",
+    "createdAt": "2026-02-10T13:00:00.000Z",
+    "updatedAt": "2026-02-10T13:00:00.000Z"
+  },
+  {
+    "id": "rec_0017_seed",
+    "description": "Student union membership fee",
+    "amount": 20000,
+    "category": "Subscriptions",
+    "date": "2026-02-11",
+    "createdAt": "2026-02-11T09:00:00.000Z",
+    "updatedAt": "2026-02-11T09:00:00.000Z"
+  },
+  {
+    "id": "rec_0018_seed",
+    "description": "Tea and biscuits",
+    "amount": 3000,
+    "category": "Food",
+    "date": "2026-02-11",
+    "createdAt": "2026-02-11T15:30:00.000Z",
+    "updatedAt": "2026-02-11T15:30:00.000Z"
+  },
+  {
+    "id": "rec_0019_seed",
+    "description": "Bus fare to town",
+    "amount": 300,
+    "category": "Transport",
+    "date": "2026-02-12",
+    "createdAt": "2026-02-12T11:00:00.000Z",
+    "updatedAt": "2026-02-12T11:00:00.000Z"
+  },
+  {
+    "id": "rec_0020_seed",
+    "description": "Cinema ticket",
+    "amount": 3000,
+    "category": "Entertainment",
+    "date": "2026-02-12",
+    "createdAt": "2026-02-12T19:00:00.000Z",
+    "updatedAt": "2026-02-12T19:00:00.000Z"
+  },
+  {
+    "id": "rec_0021_seed",
+    "description": "Printing and binding assignment",
+    "amount": 5800,
+    "category": "Other",
+    "date": "2026-02-13",
+    "createdAt": "2026-02-13T10:30:00.000Z",
+    "updatedAt": "2026-02-13T10:30:00.000Z"
+  },
+  {
+    "id": "rec_0022_seed",
+    "description": "Dinner",
+    "amount": 3500,
+    "category": "Food",
+    "date": "2026-02-13",
+    "createdAt": "2026-02-13T20:00:00.000Z",
+    "updatedAt": "2026-02-13T20:00:00.000Z"
+  },
+  {
+    "id": "rec_0023_seed",
+    "description": "Highlighters and sticky notes",
+    "amount": 3500,
+    "category": "Books",
+    "date": "2026-02-14",
+    "createdAt": "2026-02-14T09:30:00.000Z",
+    "updatedAt": "2026-02-14T09:30:00.000Z"
+  },
+  {
+    "id": "rec_0024_seed",
+    "description": "Valentine's day",
+    "amount": 10000,
+    "category": "Entertainment",
+    "date": "2026-02-14",
+    "createdAt": "2026-02-14T17:00:00.000Z",
+    "updatedAt": "2026-02-14T17:00:00.000Z"
+  },
+  {
+    "id": "rec_0025_seed",
+    "description": "Weekend bus pass",
+    "amount": 2000,
+    "category": "Transport",
+    "date": "2026-02-15",
+    "createdAt": "2026-02-15T08:00:00.000Z",
+    "updatedAt": "2026-02-15T08:00:00.000Z"
+  },
+  {
+    "id": "rec_0026_seed",
+    "description": "Brunch",
+    "amount": 4000,
+    "category": "Food",
+    "date": "2026-02-15",
+    "createdAt": "2026-02-15T10:30:00.000Z",
+    "updatedAt": "2026-02-15T10:30:00.000Z"
+  },
+  {
+    "id": "rec_0027_seed",
+    "description": "Hair cut and treatment",
+    "amount": 20000,
+    "category": "Hair & Skin Care",
+    "date": "2026-02-16",
+    "createdAt": "2026-02-16T11:00:00.000Z",
+    "updatedAt": "2026-02-16T11:00:00.000Z"
+  },
+  {
+    "id": "rec_0028_seed",
+    "description": "Juice and snacks",
+    "amount": 3500,
+    "category": "Food",
+    "date": "2026-02-16",
+    "createdAt": "2026-02-16T14:00:00.000Z",
+    "updatedAt": "2026-02-16T14:00:00.000Z"
+  },
+  {
+    "id": "rec_0029_seed",
+    "description": "Phone screen repair",
+    "amount": 50000,
+    "category": "Repairs",
+    "date": "2026-02-17",
+    "createdAt": "2026-02-17T09:00:00.000Z",
+    "updatedAt": "2026-02-17T09:00:00.000Z"
+  },
+  {
+    "id": "rec_0030_seed",
+    "description": "Bowling with classmates",
+    "amount": 16000,
+    "category": "Entertainment",
+    "date": "2026-02-17",
+    "createdAt": "2026-02-17T18:00:00.000Z",
+    "updatedAt": "2026-02-17T18:00:00.000Z"
+  },
+  {
+    "id": "rec_0031_seed",
+    "description": "Moto home after late class",
+    "amount": 2000,
+    "category": "Transport",
+    "date": "2026-02-18",
+    "createdAt": "2026-02-18T21:30:00.000Z",
+    "updatedAt": "2026-02-18T21:30:00.000Z"
+  },
+  {
+    "id": "rec_0032_seed",
+    "description": "Supermarket groceries",
+    "amount": 34000,
+    "category": "Food",
+    "date": "2026-02-18",
+    "createdAt": "2026-02-18T16:00:00.000Z",
+    "updatedAt": "2026-02-18T16:00:00.000Z"
+  },
+  {
+    "id": "rec_0033_seed",
+    "description": "New jeans and shirt",
+    "amount": 28000,
+    "category": "Clothes & Shoes",
+    "date": "2026-02-19",
+    "createdAt": "2026-02-19T10:00:00.000Z",
+    "updatedAt": "2026-02-19T10:00:00.000Z"
+  },
+  {
+    "id": "rec_0034_seed",
+    "description": "Coffee",
+    "amount": 1000,
+    "category": "Food",
+    "date": "2026-02-19",
+    "createdAt": "2026-02-19T08:00:00.000Z",
+    "updatedAt": "2026-02-19T08:00:00.000Z"
+  }
+]
