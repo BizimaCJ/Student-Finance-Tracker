@@ -66,7 +66,10 @@ function showPage(pageId) {
     setMonthPickerDefault();
     renderDashboard(getSelectedMonth());
   }
-  if (pageId === 'transactions') refreshTransactions();
+  if (pageId === 'transactions') {
+    setTransactionPickerDefault();
+    refreshTransactions();
+  }
   if (pageId === 'settings') renderSettings();
 }
 
@@ -78,27 +81,37 @@ document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(function(link) 
   });
 });
 
-function getCurrentMonth() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
+function getSelectedMonth() {
+  const m = document.getElementById('pickerMonth').value;
+  const y = document.getElementById('pickerYear').value;
   return y + '-' + m;
 }
 
-function getSelectedMonth() {
-  const picker = document.getElementById('monthPicker');
-  return (picker && picker.value) ? picker.value : getCurrentMonth();
-}
-
 function setMonthPickerDefault() {
-  const picker = document.getElementById('monthPicker');
-  if (picker && !picker.value) {
-    picker.value = getCurrentMonth();
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+
+  const yearSelect = document.getElementById('pickerYear');
+  if (yearSelect.options.length === 0) {
+    for (let y = currentYear + 1; y >= 2023; y--) {
+      const opt = document.createElement('option');
+      opt.value = String(y);
+      opt.textContent = String(y);
+      yearSelect.appendChild(opt);
+    }
   }
+
+  document.getElementById('pickerMonth').value = currentMonth;
+  document.getElementById('pickerYear').value = String(currentYear);
 }
 
-document.getElementById('monthPicker').addEventListener('change', function() {
-  renderDashboard(this.value);
+document.getElementById('pickerMonth').addEventListener('change', function() {
+  renderDashboard(getSelectedMonth());
+});
+
+document.getElementById('pickerYear').addEventListener('change', function() {
+  renderDashboard(getSelectedMonth());
 });
 
 function getSearchRegex() {
@@ -111,11 +124,37 @@ function getSortValue() {
   return document.getElementById('sortSelect').value;
 }
 
+function getTransactionFilterMonth() {
+  const m = document.getElementById('txPickerMonth').value;
+  const y = document.getElementById('txPickerYear').value;
+  if (!m || !y) return null;
+  return y + '-' + m;
+}
+
+function setTransactionPickerDefault() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const yearSelect = document.getElementById('txPickerYear');
+  if (yearSelect.options.length === 0) {
+    const allOpt = document.createElement('option');
+    allOpt.value = '';
+    allOpt.textContent = 'All years';
+    yearSelect.appendChild(allOpt);
+    for (let y = currentYear + 1; y >= 2023; y--) {
+      const opt = document.createElement('option');
+      opt.value = String(y);
+      opt.textContent = String(y);
+      yearSelect.appendChild(opt);
+    }
+  }
+}
+
 function refreshTransactions() {
   const re = getSearchRegex();
   const sort = getSortValue();
+  const monthFilter = getTransactionFilterMonth();
   const tbody = document.getElementById('transactionsBody');
-  renderTransactions(tbody, re, sort);
+  renderTransactions(tbody, re, sort, monthFilter);
 
   const emptyState = document.getElementById('emptyState');
   if (getTransactions().length === 0) {
@@ -139,6 +178,14 @@ document.getElementById('searchCaseToggle').addEventListener('change', function(
 });
 
 document.getElementById('sortSelect').addEventListener('change', function() {
+  refreshTransactions();
+});
+
+document.getElementById('txPickerMonth').addEventListener('change', function() {
+  refreshTransactions();
+});
+
+document.getElementById('txPickerYear').addEventListener('change', function() {
   refreshTransactions();
 });
 
@@ -227,7 +274,9 @@ document.getElementById('exportBtn').addEventListener('click', function() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'campuscoins-export.json';
+  const today = new Date();
+  const dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+  a.download = 'campuscoins-export-' + dateStr + '.json';
   a.click();
   URL.revokeObjectURL(url);
   showToast('Exported ' + data.length + ' transactions.', 'success');
@@ -303,8 +352,6 @@ document.getElementById('saveBudgetBtn').addEventListener('click', function() {
   setFieldError('budgetLimit', 'errBudget', err);
   if (err) return;
   updateSettings({ budget: parseInt(val, 10) });
-  document.getElementById('budgetMessage').textContent = '';
-  renderDashboard(getSelectedMonth());
   showToast('Budget saved.', 'success');
 });
 

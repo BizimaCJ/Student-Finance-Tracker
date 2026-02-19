@@ -1,10 +1,10 @@
 const RE_DESCRIPTION = /^\S(?:.*\S)?$/;
 
-const RE_AMOUNT = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
+const RE_AMOUNT = /^(0|[1-9]\d*)$/;
 
 const RE_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
-const RE_CATEGORY = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
+const RE_CATEGORY = /^[A-Za-z]+(?:[ /&-][A-Za-z]+)*$/;
 
 const RE_DUPLICATE_WORD = /\b(\w+)\s+\1\b/i;
 
@@ -30,7 +30,7 @@ export function validateAmount(value) {
     return 'Amount is required.';
   }
   if (!RE_AMOUNT.test(value.trim())) {
-    return 'Amount must be a positive number with up to 2 decimal places (e.g. 12.50).';
+    return 'Amount must be a whole number with no decimals (e.g. 12500).';
   }
   return '';
 }
@@ -50,7 +50,7 @@ export function validateCategory(value) {
     return 'Category is required.';
   }
   if (!RE_CATEGORY.test(value.trim())) {
-    return 'Category must contain only letters, spaces, or hyphens.';
+    return 'Category must contain only letters, spaces, hyphens, slashes, or ampersands.';
   }
   return '';
 }

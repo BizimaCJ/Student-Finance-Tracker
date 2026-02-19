@@ -55,8 +55,23 @@
         <h1 id="dashboard-heading" class="page-title">Dashboard</h1>
 
         <div class="month-picker-wrap">
-          <label for="monthPicker" class="month-picker-label">Viewing month</label>
-          <input type="month" id="monthPicker" class="month-picker" aria-label="Select month to view" />
+          <span class="month-picker-label">Viewing month</span>
+          <select id="pickerMonth" class="month-picker" aria-label="Select month">
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <select id="pickerYear" class="month-picker" aria-label="Select year">
+          </select>
         </div>
 
         <div class="stats-grid">
@@ -105,6 +120,27 @@
     <section id="page-transactions" class="page" aria-labelledby="transactions-heading">
       <div class="page-inner">
         <h1 id="transactions-heading" class="page-title">Transactions</h1>
+
+        <div class="month-picker-wrap">
+          <span class="month-picker-label">Filter by month</span>
+          <select id="txPickerMonth" class="month-picker" aria-label="Filter by month">
+            <option value="">All months</option>
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <select id="txPickerYear" class="month-picker" aria-label="Filter by year">
+          </select>
+        </div>
 
         <div class="toolbar">
           <div class="search-wrap">
@@ -260,7 +296,7 @@
           <p>Add and manage transactions. Sort and search your records. View a spending dashboard with trends and category breakdowns. Import and export your data as JSON. Set a monthly budget and get alerts when you go over.</p>
           <h2 class="section-title">Contact</h2>
           <p>GitHub: <a href="https://github.com" class="about-link" target="_blank" rel="noopener noreferrer">github.com/BizimaCJ</a></p>
-          <p>Email: <a href="mailto:c.bizima@alustudent.com" class="about-link">c.bizima@alustudent.com</a></p>
+          <p>Email: <a href="mailto:c.bizima@alustudent.com">c.bizima@alustudent.com</a></p>
           <h2 class="section-title">How to Use</h2>
           <p>Click Add New in the navigation to add a transaction. Fill in a description, amount in RWF, category, and date. Your data is saved automatically in your browser. You can export it as a JSON file at any time from the Transactions page.</p>
           <h2 class="section-title">Keyboard Navigation</h2>

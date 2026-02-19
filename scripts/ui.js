@@ -17,11 +17,12 @@ export function renderCategorySelect(selectEl, categories) {
   });
 }
 
-export function renderTransactions(tbody, re, sortValue) {
+export function renderTransactions(tbody, re, sortValue, monthFilter) {
   const transactions = getTransactions();
   const settings = getSettings();
 
   let filtered = transactions.filter(function(t) {
+    if (monthFilter && t.date && t.date.slice(0, 7) !== monthFilter) return false;
     return matchesSearch(t, re);
   });
 
@@ -245,7 +246,7 @@ function renderTrend(transactions, month) {
 
     const bar = document.createElement('div');
     bar.className = 'trend-bar';
-    const heightPct = Math.max((day.total / maxTotal) * 64, day.total > 0 ? 4 : 2);
+    const heightPct = Math.max((day.total / maxTotal) * 100, day.total > 0 ? 4 : 2);
     bar.style.height = heightPct + 'px';
     bar.setAttribute('title', day.date + ': ' + Math.round(day.total).toLocaleString());
 
