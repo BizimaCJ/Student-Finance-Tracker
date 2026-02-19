@@ -1,0 +1,65 @@
+[
+  {
+    "id": "rec_0035_seed",
+    "description": "December rent payment",
+    "amount": 20000,
+    "category": "Rent/Dorm Fees",
+    "date": "2025-12-01",
+    "createdAt": "2025-12-01T08:00:00.000Z",
+    "updatedAt": "2025-12-01T08:00:00.000Z"
+  },
+  {
+    "id": "rec_0036_seed",
+    "description": "Groceries",
+    "amount": 8500,
+    "category": "Food",
+    "date": "2025-12-03",
+    "createdAt": "2025-12-03T10:00:00.000Z",
+    "updatedAt": "2025-12-03T10:00:00.000Z"
+  },
+  {
+    "id": "rec_0037_seed",
+    "description": "Moto rides to campus",
+    "amount": 3000,
+    "category": "Transport",
+    "date": "2025-12-05",
+    "createdAt": "2025-12-05T07:30:00.000Z",
+    "updatedAt": "2025-12-05T07:30:00.000Z"
+  },
+  {
+    "id": "rec_0038_seed",
+    "description": "Lunch and dinner at cafeteria",
+    "amount": 5200,
+    "category": "Food",
+    "date": "2025-12-10",
+    "createdAt": "2025-12-10T13:00:00.000Z",
+    "updatedAt": "2025-12-10T13:00:00.000Z"
+  },
+  {
+    "id": "rec_0039_seed",
+    "description": "Christmas gift for family",
+    "amount": 7500,
+    "category": "Gifts/Contributions",
+    "date": "2025-12-15",
+    "createdAt": "2025-12-15T14:00:00.000Z",
+    "updatedAt": "2025-12-15T14:00:00.000Z"
+  },
+  {
+    "id": "rec_0040_seed",
+    "description": "Toiletries restock",
+    "amount": 4500,
+    "category": "Toiletries",
+    "date": "2025-12-18",
+    "createdAt": "2025-12-18T09:00:00.000Z",
+    "updatedAt": "2025-12-18T09:00:00.000Z"
+  },
+  {
+    "id": "rec_0041_seed",
+    "description": "Christmas dinner out",
+    "amount": 2000,
+    "category": "Food",
+    "date": "2025-12-25",
+    "createdAt": "2025-12-25T19:00:00.000Z",
+    "updatedAt": "2025-12-25T19:00:00.000Z"
+  }
+]
