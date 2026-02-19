@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Finance Tracker</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">$</span>
+        <span class="logo-text">FinTrack</span>
+      </div>
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="#dashboard" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+          <li><a href="#transactions" class="nav-link" data-page="transactions">Transactions</a></li>
+          <li><a href="#add" class="nav-link" data-page="add">Add New</a></li>
+          <li><a href="#settings" class="nav-link" data-page="settings">Settings</a></li>
+          <li><a href="#about" class="nav-link" data-page="about">About</a></li>
+        </ul>
+      </nav>
+      <div class="header-controls">
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch to light mode" type="button">
+          <span class="theme-toggle-track">
+            <span class="theme-toggle-thumb"></span>
+          </span>
+          <span class="theme-label">Dark</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <ul class="mobile-nav-list">
+      <li><a href="#dashboard" class="mobile-nav-link" data-page="dashboard">Dashboard</a></li>
+      <li><a href="#transactions" class="mobile-nav-link" data-page="transactions">Transactions</a></li>
+      <li><a href="#add" class="mobile-nav-link" data-page="add">Add New</a></li>
+      <li><a href="#settings" class="mobile-nav-link" data-page="settings">Settings</a></li>
+      <li><a href="#about" class="mobile-nav-link" data-page="about">About</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content" role="main">
+
+    <section id="page-dashboard" class="page active" aria-labelledby="dashboard-heading">
+      <div class="page-inner">
+        <h1 id="dashboard-heading" class="page-title">Dashboard</h1>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">Total Transactions</span>
+            <span class="stat-value" id="statTotal">0</span>
+          </div>
+          <div class="stat-card accent">
+            <span class="stat-label">Total Spent</span>
+            <span class="stat-value" id="statSpent">0.00</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Top Category</span>
+            <span class="stat-value" id="statTopCat">-</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Budget Remaining</span>
+            <span class="stat-value" id="statRemaining">0.00</span>
+          </div>
+        </div>
+
+        <div class="budget-section">
+          <h2 class="section-title">Budget Status</h2>
+          <div class="budget-bar-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Budget usage">
+            <div class="budget-bar" id="budgetBar"></div>
+          </div>
+          <div class="budget-labels">
+            <span id="budgetSpentLabel">Spent: 0.00</span>
+            <span id="budgetLimitLabel">Limit: 0.00</span>
+          </div>
+          <div class="budget-message" id="budgetMessage" role="status" aria-live="polite"></div>
+        </div>
+
+        <div class="trend-section">
+          <h2 class="section-title">Last 7 Days</h2>
+          <div class="trend-chart" id="trendChart" aria-label="Spending trend for last 7 days"></div>
+        </div>
+
+        <div class="category-section">
+          <h2 class="section-title">By Category</h2>
+          <div class="category-list" id="categoryList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-transactions" class="page" aria-labelledby="transactions-heading">
+      <div class="page-inner">
+        <h1 id="transactions-heading" class="page-title">Transactions</h1>
+
+        <div class="toolbar">
+          <div class="search-wrap">
+            <label for="searchInput" class="sr-only">Search transactions</label>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search (regex supported)" autocomplete="off" />
+            <label class="checkbox-label">
+              <input type="checkbox" id="searchCaseToggle" />
+              Case sensitive
+            </label>
+          </div>
+          <div class="sort-wrap">
+            <label for="sortSelect" class="sort-label">Sort by</label>
+            <select id="sortSelect" class="sort-select">
+              <option value="date-desc">Date (Newest)</option>
+              <option value="date-asc">Date (Oldest)</option>
+              <option value="amount-desc">Amount (High)</option>
+              <option value="amount-asc">Amount (Low)</option>
+              <option value="description-asc">Name (A-Z)</option>
+              <option value="description-desc">Name (Z-A)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="search-error" id="searchError" role="alert" aria-live="assertive"></div>
+
+        <div class="table-wrap" role="region" aria-label="Transactions table">
+          <table class="transactions-table" id="transactionsTable">
+            <thead>
+              <tr>
+                <th scope="col">Description</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Category</th>
+                <th scope="col">Date</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="transactionsBody">
+            </tbody>
+          </table>
+        </div>
+
+        <div class="empty-state" id="emptyState" aria-live="polite">
+          <p>No transactions yet. Add your first one!</p>
+        </div>
+
+        <div class="import-export">
+          <h2 class="section-title">Import / Export</h2>
+          <div class="ie-buttons">
+            <button type="button" class="btn btn-secondary" id="exportBtn">Export JSON</button>
+            <label class="btn btn-secondary" for="importFile">Import JSON</label>
+            <input type="file" id="importFile" accept=".json" class="sr-only" />
+          </div>
+          <div class="import-status" id="importStatus" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-add" class="page" aria-labelledby="add-heading">
+      <div class="page-inner">
+        <h1 id="add-heading" class="page-title">Add Transaction</h1>
+
+        <form id="transactionForm" class="form" novalidate>
+          <input type="hidden" id="editId" />
+
+          <div class="form-group">
+            <label for="fieldDescription" class="form-label">Description</label>
+            <input type="text" id="fieldDescription" class="form-input" required autocomplete="off" />
+            <span class="form-error" id="errDescription" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="fieldAmount" class="form-label">Amount</label>
+            <div class="amount-wrap">
+              <span class="currency-prefix" id="currencyPrefix">USD</span>
+              <input type="text" id="fieldAmount" class="form-input" required autocomplete="off" />
+            </div>
+            <span class="form-error" id="errAmount" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="fieldCategory" class="form-label">Category</label>
+            <select id="fieldCategory" class="form-input form-select">
+            </select>
+            <span class="form-error" id="errCategory" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="fieldDate" class="form-label">Date</label>
+            <input type="text" id="fieldDate" class="form-input" placeholder="YYYY-MM-DD" required autocomplete="off" />
+            <span class="form-error" id="errDate" role="alert"></span>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submitBtn">Add Transaction</button>
+            <button type="button" class="btn btn-secondary" id="cancelEditBtn" style="display:none;">Cancel Edit</button>
+          </div>
+
+          <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="page-settings" class="page" aria-labelledby="settings-heading">
+      <div class="page-inner">
+        <h1 id="settings-heading" class="page-title">Settings</h1>
+
+        <div class="settings-group">
+          <h2 class="section-title">Budget</h2>
+          <div class="form-group">
+            <label for="budgetLimit" class="form-label">Monthly Budget Limit</label>
+            <input type="text" id="budgetLimit" class="form-input" placeholder="e.g. 500" />
+            <span class="form-error" id="errBudget" role="alert"></span>
+          </div>
+          <button type="button" class="btn btn-primary" id="saveBudgetBtn">Save Budget</button>
+        </div>
+
+        <div class="settings-group">
+          <h2 class="section-title">Currency</h2>
+          <div class="form-group">
+            <label for="baseCurrency" class="form-label">Base Currency</label>
+            <select id="baseCurrency" class="form-input form-select">
+              <option value="USD">USD - US Dollar</option>
+              <option value="EUR">EUR - Euro</option>
+              <option value="GBP">GBP - British Pound</option>
+              <option value="RWF">RWF - Rwandan Franc</option>
+              <option value="KES">KES - Kenyan Shilling</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rate1Label" class="form-label">Currency 2 Label</label>
+            <input type="text" id="rate1Label" class="form-input" placeholder="e.g. EUR" />
+          </div>
+          <div class="form-group">
+            <label for="rate1Value" class="form-label">Currency 2 Rate (1 base = ? currency 2)</label>
+            <input type="text" id="rate1Value" class="form-input" placeholder="e.g. 0.92" />
+          </div>
+          <div class="form-group">
+            <label for="rate2Label" class="form-label">Currency 3 Label</label>
+            <input type="text" id="rate2Label" class="form-input" placeholder="e.g. GBP" />
+          </div>
+          <div class="form-group">
+            <label for="rate2Value" class="form-label">Currency 3 Rate (1 base = ? currency 3)</label>
+            <input type="text" id="rate2Value" class="form-input" placeholder="e.g. 0.79" />
+          </div>
+          <button type="button" class="btn btn-primary" id="saveCurrencyBtn">Save Currency Settings</button>
+          <div class="settings-status" id="currencyStatus" role="status" aria-live="polite"></div>
+        </div>
+
+        <div class="settings-group">
+          <h2 class="section-title">Categories</h2>
+          <div class="category-manager" id="categoryManager"></div>
+          <div class="form-group category-add-wrap">
+            <label for="newCategory" class="form-label">Add Category</label>
+            <input type="text" id="newCategory" class="form-input" placeholder="e.g. Groceries" />
+            <span class="form-error" id="errNewCategory" role="alert"></span>
+          </div>
+          <button type="button" class="btn btn-primary" id="addCategoryBtn">Add Category</button>
+          <div class="settings-status" id="categoryStatus" role="status" aria-live="polite"></div>
+        </div>
+
+        <div class="settings-group danger-zone">
+          <h2 class="section-title">Danger Zone</h2>
+          <button type="button" class="btn btn-danger" id="clearDataBtn">Clear All Data</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-about" class="page" aria-labelledby="about-heading">
+      <div class="page-inner">
+        <h1 id="about-heading" class="page-title">About</h1>
+        <div class="about-content">
+          <p>FinTrack is a simple student finance tracker built with plain HTML, CSS, and JavaScript. It helps you keep track of spending, set a monthly budget, and understand where your money goes.</p>
+          <h2 class="section-title">Features</h2>
+          <p>Add and manage transactions. Sort and search your records. View a spending dashboard with trends and category breakdowns. Import and export your data as JSON. Set a monthly budget and get alerts when you go over.</p>
+          <h2 class="section-title">Contact</h2>
+          <p>
+            GitHub: <a href="https://github.com" class="about-link" target="_blank" rel="noopener noreferrer">github.com/yourusername</a>
+          </p>
+          <p>
+            Email: <a href="mailto:you@example.com" class="about-link">you@example.com</a>
+          </p>
+          <h2 class="section-title">How to Use</h2>
+          <p>Click Add New in the navigation to add a transaction. Fill in a description, amount, category, and date. Your data is saved automatically in your browser. You can export it as a JSON file at any time from the Transactions page.</p>
+          <h2 class="section-title">Keyboard Navigation</h2>
+          <p>Use Tab to move between elements. Use Enter or Space to activate buttons. Use the skip link at the top of the page to jump to main content. All interactive elements have visible focus styles.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p>FinTrack - Student Finance Tracker</p>
+      <p>Data stored locally in your browser</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="scripts/app.js"></script>
+</body>
+</html>
