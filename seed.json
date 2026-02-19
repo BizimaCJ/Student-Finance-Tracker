@@ -1,0 +1,110 @@
+[
+  {
+    "id": "rec_0001_seed",
+    "description": "Lunch at cafeteria",
+    "amount": 12.50,
+    "category": "Food",
+    "date": "2025-09-25",
+    "createdAt": "2025-09-25T10:00:00.000Z",
+    "updatedAt": "2025-09-25T10:00:00.000Z"
+  },
+  {
+    "id": "rec_0002_seed",
+    "description": "Chemistry textbook",
+    "amount": 89.99,
+    "category": "Books",
+    "date": "2025-09-23",
+    "createdAt": "2025-09-23T09:00:00.000Z",
+    "updatedAt": "2025-09-23T09:00:00.000Z"
+  },
+  {
+    "id": "rec_0003_seed",
+    "description": "Monthly bus pass",
+    "amount": 45.00,
+    "category": "Transport",
+    "date": "2025-09-20",
+    "createdAt": "2025-09-20T08:00:00.000Z",
+    "updatedAt": "2025-09-20T08:00:00.000Z"
+  },
+  {
+    "id": "rec_0004_seed",
+    "description": "Coffee with friends",
+    "amount": 8.75,
+    "category": "Entertainment",
+    "date": "2025-09-28",
+    "createdAt": "2025-09-28T14:00:00.000Z",
+    "updatedAt": "2025-09-28T14:00:00.000Z"
+  },
+  {
+    "id": "rec_0005_seed",
+    "description": "University registration fees",
+    "amount": 350.00,
+    "category": "Fees",
+    "date": "2025-09-01",
+    "createdAt": "2025-09-01T08:00:00.000Z",
+    "updatedAt": "2025-09-01T08:00:00.000Z"
+  },
+  {
+    "id": "rec_0006_seed",
+    "description": "Dinner at restaurant",
+    "amount": 22.99,
+    "category": "Food",
+    "date": "2025-09-27",
+    "createdAt": "2025-09-27T19:00:00.000Z",
+    "updatedAt": "2025-09-27T19:00:00.000Z"
+  },
+  {
+    "id": "rec_0007_seed",
+    "description": "Math and physics notes",
+    "amount": 15.00,
+    "category": "Books",
+    "date": "2025-09-15",
+    "createdAt": "2025-09-15T11:00:00.000Z",
+    "updatedAt": "2025-09-15T11:00:00.000Z"
+  },
+  {
+    "id": "rec_0008_seed",
+    "description": "Movie night ticket",
+    "amount": 12.00,
+    "category": "Entertainment",
+    "date": "2025-09-22",
+    "createdAt": "2025-09-22T20:00:00.000Z",
+    "updatedAt": "2025-09-22T20:00:00.000Z"
+  },
+  {
+    "id": "rec_0009_seed",
+    "description": "Taxi to airport",
+    "amount": 38.50,
+    "category": "Transport",
+    "date": "2025-09-10",
+    "createdAt": "2025-09-10T06:00:00.000Z",
+    "updatedAt": "2025-09-10T06:00:00.000Z"
+  },
+  {
+    "id": "rec_0010_seed",
+    "description": "Notebook and pens",
+    "amount": 9.99,
+    "category": "Other",
+    "date": "2025-09-05",
+    "createdAt": "2025-09-05T12:00:00.000Z",
+    "updatedAt": "2025-09-05T12:00:00.000Z"
+  },
+  {
+    "id": "rec_0011_seed",
+    "description": "Tea and snacks",
+    "amount": 5.25,
+    "category": "Food",
+    "date": "2025-09-29",
+    "createdAt": "2025-09-29T10:30:00.000Z",
+    "updatedAt": "2025-09-29T10:30:00.000Z"
+  },
+  {
+    "id": "rec_0012_seed",
+    "description": "Library late fees",
+    "amount": 3.00,
+    "category": "Fees",
+    "date": "2025-09-18",
+    "createdAt": "2025-09-18T14:00:00.000Z",
+    "updatedAt": "2025-09-18T14:00:00.000Z"
+  }
+]
