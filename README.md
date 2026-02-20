@@ -3,6 +3,7 @@
 A simple, accessible student finance tracker built with plain HTML, CSS, and JavaScript.
 
 Live URL: https://bizimacj.github.io/Student-Finance-Tracker/
+Live Demo : https://www.loom.com/share/19538f216a064434b46c87b94ba29be6
 
 ## Overview
 
