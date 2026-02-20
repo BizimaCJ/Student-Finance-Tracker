@@ -1,4 +1,4 @@
-# UniWallet
+# CampusCoins
 
 A simple, accessible student finance tracker built with plain HTML, CSS, and JavaScript.
 
@@ -7,7 +7,7 @@ Live Demo : https://www.loom.com/share/19538f216a064434b46c87b94ba29be6
 
 ## Overview
 
-UniWallet lets you record spending, set a monthly budget, search and sort transactions, and view a spending dashboard. All data is stored in your browser using localStorage. You can export your data as JSON and import it back.
+CampusCoins lets you record spending, set a monthly budget, search and sort transactions, and view a spending dashboard. All data is stored in your browser using localStorage. You can export your data as JSON and import it back.
 
 ## How to Run Locally
 
