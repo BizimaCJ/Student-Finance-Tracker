@@ -3,6 +3,7 @@
 A simple, accessible student finance tracker built with plain HTML, CSS, and JavaScript.
 
 Live URL: https://bizimacj.github.io/Student-Finance-Tracker/
+
 Live Demo : https://www.loom.com/share/19538f216a064434b46c87b94ba29be6
 
 ## Overview
@@ -113,4 +114,5 @@ Open tests.html in a local server. All tests run automatically and results displ
 - M4: Transactions table, sorting, live regex search with highlight
 - M5: Dashboard stats, budget bar, trend chart, category breakdown
 - M6: localStorage persistence, JSON import/export, settings page
+
 - M7: Dark/light theme, animations, keyboard pass, accessibility audit
