@@ -44,6 +44,8 @@ CampusCoins lets you record spending, set a monthly budget, search and sort tran
 index.html          main page
 tests.html          validator and search tests
 seed.json           sample data (import via Transactions page)
+seed1.json
+seed2.json
 styles/
   main.css          all styles
 scripts/
@@ -116,3 +118,4 @@ Open tests.html in a local server. All tests run automatically and results displ
 - M6: localStorage persistence, JSON import/export, settings page
 
 - M7: Dark/light theme, animations, keyboard pass, accessibility audit
+
